@@ -97,11 +97,19 @@
 		<p>Contact me at <a href="mailto:yourname@example.com">yourname@example.com</a></p>
 	</header>
 	<div class="grid">
-		<?php
-		$dir = "photos/";
-		$files = scandir($dir);
-		foreach($files as $file) {
-			$ext = pathinfo($file, PATHINFO_EXTENSION);
-			if ($ext == "jpg" || $ext == "jpeg" || $ext == "png" || $ext == "gif") {
-				echo '<div class="grid-item">
-						<img class="lazy" src="data:image/gif;base64,R0lGODlh
+		<div id="photos"></div>
+	</div>
+	<div id="myModal" class="modal">
+		<span class="close">&times;</span>
+		<img class="modal-content">
+	</div>
+	<script>
+		function lazyLoad() {
+			var images = document.querySelectorAll("img.lazy");
+			var windowHeight = window.innerHeight;
+			images.forEach(function(img) {
+				var rect = img.getBoundingClientRect();
+				if (rect.top < windowHeight) {
+					img.src = img.dataset.src;
+					img.classList.remove("lazy");
+				
