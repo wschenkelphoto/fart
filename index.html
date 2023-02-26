@@ -1,21 +1,101 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Photo Gallery</title>
+	<title>My Photo Gallery</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<style>
+		header {
+			background-color: #333;
+			color: white;
+			padding: 20px;
+		}
 		.grid {
 			display: grid;
 			grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
 			grid-gap: 10px;
 			padding: 10px;
 		}
+		.grid-item {
+			position: relative;
+			overflow: hidden;
+			border-radius: 5px;
+			box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
+			cursor: pointer;
+		}
 		.grid-item img {
-			max-width: 100%;
+			display: block;
+			width: 100%;
 			height: auto;
+			transition: transform 0.3s ease-out;
+		}
+		.grid-item img.lazy {
+			filter: blur(20px);
+		}
+		.grid-item:hover img {
+			transform: scale(1.1);
+		}
+		.grid-item:hover img.lazy {
+			filter: none;
+		}
+		.grid-item .loader {
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%, -50%);
+			font-size: 20px;
+			color: #333;
+		}
+		.modal {
+			display: none;
+			position: fixed;
+			z-index: 1;
+			padding-top: 100px;
+			left: 0;
+			top: 0;
+			width: 100%;
+			height: 100%;
+			overflow: auto;
+			background-color: rgba(0, 0, 0, 0.9);
+		}
+		.modal-content {
+			margin: auto;
+			display: block;
+			width: 80%;
+			max-width: 800px;
+		}
+		.modal-content img {
+			display: block;
+			margin: auto;
+			max-width: 100%;
+			max-height: 80vh;
+		}
+		.close {
+			position: absolute;
+			top: 10px;
+			right: 25px;
+			color: white;
+			font-size: 35px;
+			font-weight: bold;
+			cursor: pointer;
+		}
+		.close:hover,
+		.close:focus {
+			color: #999;
+			text-decoration: none;
+			cursor: pointer;
+		}
+		@media screen and (max-width: 700px) {
+			.modal-content {
+				width: 100%;
+			}
 		}
 	</style>
 </head>
 <body>
+	<header>
+		<h1>My Photo Gallery</h1>
+		<p>Contact me at <a href="mailto:yourname@example.com">yourname@example.com</a></p>
+	</header>
 	<div class="grid">
 		<?php
 		$dir = "photos/";
@@ -23,10 +103,5 @@
 		foreach($files as $file) {
 			$ext = pathinfo($file, PATHINFO_EXTENSION);
 			if ($ext == "jpg" || $ext == "jpeg" || $ext == "png" || $ext == "gif") {
-				echo '<div class="grid-item"><img src="'.$dir.$file.'" alt="'.$file.'"></div>';
-			}
-		}
-		?>
-	</div>
-</body>
-</html>
+				echo '<div class="grid-item">
+						<img class="lazy" src="data:image/gif;base64,R0lGODlh
