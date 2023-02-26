@@ -14,19 +14,8 @@
 			height: auto;
 		}
 	</style>
-		<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.lazy/1.7.10/jquery.lazy.min.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.lazy/1.7.10/jquery.lazy.plugins.min.js"></script>
-
 </head>
 <body>
-	<header>
-		<h1>Contact Information</h1>
-		<p>Name: John Doe</p>
-		<p>Email: johndoe@example.com</p>
-		<p>Phone: 555-555-5555</p>
-	</header>
-
 	<div class="grid">
 		<?php
 		$dir = "photos/";
@@ -34,32 +23,10 @@
 		foreach($files as $file) {
 			$ext = pathinfo($file, PATHINFO_EXTENSION);
 			if ($ext == "jpg" || $ext == "jpeg" || $ext == "png" || $ext == "gif") {
-				echo '<div class="grid-item"><img data-src="'.$dir.$file.'" alt="'.$file.'"></div>';
+				echo '<div class="grid-item"><img src="'.$dir.$file.'" alt="'.$file.'"></div>';
 			}
 		}
 		?>
 	</div>
-
-	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-	<script>
-		$(document).ready(function(){
-			$('img').click(function(){
-				var src = $(this).attr('src');
-				$('body').append('<div class="overlay"></div><div class="popup"><img src="'+src+'"><div class="close-btn">&times;</div></div>');
-				$('.close-btn, .overlay').click(function(){
-					$('.popup, .overlay').remove();
-				});
-			});
-		});
-
-		$(function() {
-			$('img').lazy();
-		});
-	</script>
-
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.lazy/1.7.10/jquery.lazy.min.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.lazy/1.7.10/jquery.lazy.plugins.min.js"></script>
-
 </body>
-
 </html>
